@@ -58,3 +58,49 @@ Log& Log::operator<<(const double num) {
     }
     return *this; //returns itself as a reference
 }
+
+void Log::open_log_empty() {
+    try {
+
+        fh.open(fileName, std::ios::trunc);
+        state = "open"; //set state as open
+
+    } catch (runtime_error) {
+        "Failed to open file";
+    }
+}
+
+void Log::open_log_append() {
+    try {
+
+        fh.open(fileName, std::ios::out | std::ios::app);
+        state = "open"; //set state as open
+
+    } catch (runtime_error) {
+        "Failed to open file";
+    }
+}
+
+void Log::close_log() {
+    fh.close();
+    state = "closed"; //set state as closed
+}
+
+void Log::flush_log() {
+    fh.flush();
+    state = "flushed"; //set state as flushed
+}
+
+string Log::get_state(){
+    return state;
+}
+
+string Log::get_fileName(){
+    return fileName;
+}
+
+string Log::get_filePath(){
+    filesystem::path thisPath = filesystem::current_path();
+    string patstring = thisPath.generic_string();
+    return patstring; //returns path as a string
+}
