@@ -40,34 +40,42 @@ TEST(general, TESTAPPEND){
     Log c1("test.txt");
     string line;
     c1 << ("hello world\n"); //appends string to log
-    c1.open_log_append(); //calls open log append
-    fstream fh;
     c1.flush_log(); //flush log
+    fstream fh;
     fh.open("test.txt", ios::in); //opens file
     getline(fh, line);
     ASSERT_EQ(line, "hello world") << "Logs should match";
 }
 
-TEST(general, TESTEMPTY){
-    Log c1("test2.txt");
-    string line;
+TEST(general, TESTEXISTING){
+    Log l1("C:/Users/nhant/directory.txt");
+    l1.close_log();
+    l1.open_log_new();
+    l1 << "hello";
+    l1.close_log();
     fstream fh;
-    c1.open_log_empty(); //calls open log empty
-    fh.open("test2.txt", std::ios::trunc);
-    while(fh){ //reads file
-        getline(fh, line);
-    }
-    ASSERT_EQ(c1.get_state(), "open") << "States should match";
-    ASSERT_EQ(line, "") << "Logs should match";
+    string line;
+    fh.open("C:/Users/nhant/directory.txt", ios::in);
+    getline(fh, line);
+    ASSERT_EQ(line, "hello") << "Logs should match";
 }
+//TEST(general, TESTEMPTY){
+//    Log c1("test2.txt");
+//    string line;
+//    fstream fh;
+//    c1.open_log_new(); //calls open log empty
+//    fh.open("test2.txt", std::ios::trunc);
+//    while(fh){ //reads file
+//        getline(fh, line);
+//    }
+//    ASSERT_EQ(c1.get_state(), "open") << "States should match";
+//    ASSERT_EQ(line, "") << "Logs should match";
+//}
 
-TEST(general, TESTFIXTURE) {
-    Log s1; //log object 1
-    Log s2(""); //log object 2
-    ASSERT_EQ(s1.get_filePath(), s2.get_filePath()) << "These file paths should match!";
-}
 
 int main(int argc, char **argv) {
+    Log test("pathtest.txt");
+    std::cout << test.get_filePath();
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }

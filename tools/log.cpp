@@ -1,26 +1,36 @@
 #include "log.h"
 
 
-Log::Log() {
-    fh.open("./exampleLogFile.txt", std::ofstream::out | std::ofstream::app ); //file handler is opened
+Log::Log(): state("open"), fileName("exampleLogFile.txt"), filePath(filesystem::current_path().generic_string() + "/exampleLogFile.txt") {
+    fh.open(filePath, std::ofstream::out | std::ofstream::app ); //file handler is opened
+
     //SHOW_WHERE;
 }
 
-Log::Log(std::string fileName): filePath(fileName), state("open") {
-    fh.open(fileName, std::ofstream::out | std::ofstream::app); //file handler is opened with given file name
+Log::Log(std::string filePath): state("open"){
+    if(filePath.find("/\\") == -1){ // just file name was specified, assuming file is in same directory
+        this->filePath = filesystem::current_path().generic_string() + filePath;
+        fileName = filePath;
+    }
+    else{
+        this->filePath = filePath;
+        fileName = filePath.substr(filePath.find_last_of("/\\")+1);
+    }
+
+    fh.open(filePath, std::ofstream::out | std::ofstream::app); //file handler is opened with given file path
     //SHOW_WHERE;
 }
 
 Log::Log(Log &obj) {
-    fileName = obj.fileName;
     state = obj.state;
+    fileName = obj.fileName;
     filePath = obj.filePath;
     //SHOW_WHERE;
 }
 
 void Log::operator=(Log &obj) {
-    fileName = obj.fileName;
     state = obj.state;
+    fileName = obj.fileName;
     filePath = obj.filePath;
     //SHOW_WHERE;
 }
@@ -59,10 +69,10 @@ Log& Log::operator<<(const double num) {
     return *this; //returns itself as a reference
 }
 
-void Log::open_log_empty() {
+void Log::open_log() {
     try {
 
-        fh.open(fileName, std::ios::trunc);
+        fh.open(filePath, std::ios::out | std::ios::app);
         state = "open"; //set state as open
 
     } catch (runtime_error) {
@@ -70,10 +80,10 @@ void Log::open_log_empty() {
     }
 }
 
-void Log::open_log_append() {
+void Log::open_log_new() {
     try {
 
-        fh.open(fileName, std::ios::out | std::ios::app);
+        fh.open(filePath, std::ios::out | std::ios::trunc);
         state = "open"; //set state as open
 
     } catch (runtime_error) {
@@ -100,7 +110,5 @@ string Log::get_fileName(){
 }
 
 string Log::get_filePath(){
-    filesystem::path thisPath = filesystem::current_path();
-    string patstring = thisPath.generic_string();
-    return patstring; //returns path as a string
+    return filePath; //returns path as a string
 }
