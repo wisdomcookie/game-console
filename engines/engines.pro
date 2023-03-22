@@ -18,11 +18,13 @@ unix:LIBS += -lncurses
 
 SOURCES += \
         engine.cpp \
+        engine.cpp \
         main.cpp \
         robots.cpp \
         worm.cpp
 
 HEADERS += \
+    engine.h \
     engine.h \
     robots.h \
     worm.h
