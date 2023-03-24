@@ -89,3 +89,27 @@ bool Engine::valid_gameboard(int x, int y){
         return false; // checks for null gameboard and x and y out of bounds
     return true;
 }
+
+void Engine::print_gameboard(){
+    for(int i = 0; i < rows; i+=1){
+        for(int j = 0; j < cols; j+=1){
+            std::cout<<gameboard[i][j]<<' ';
+        }
+        std::cout<<'\n';
+    }
+    std::cout<<'\n';
+}
+
+std::string Engine::gameboard_string(){
+
+    std::string res = "";
+
+    for(int i = 0; i < rows; i+=1){
+        for(int j = 0; j < cols; j+=1){
+            res.push_back(gameboard[i][j]);
+            res += " ";
+        }
+        res += "\n";
+    }
+    return res;
+}
