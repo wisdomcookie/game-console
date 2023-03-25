@@ -21,11 +21,13 @@ SOURCES += \
         engine.cpp \
         main.cpp \
         robots.cpp \
+        robots.cpp \
         worm.cpp
 
 HEADERS += \
     engine.h \
     engine.h \
+    robots.h \
     robots.h \
     worm.h
 
