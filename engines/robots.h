@@ -79,6 +79,29 @@ public:
      */
     void player_do();
     bool valid_move(char input);
+
+    /**
+     * @brief get_playerpos gets the player position
+     * @return player position
+     */
+    std::pair<int, int> get_playerpos();
+
+    int get_points();
+
+    state get_gamestate();
+
+    std::string get_gamestate_string();
+
+    /**
+     * @brief set_player_input Sets the player input for the next move to c
+     * @param c
+     */
+    void set_player_input(char c);
+
+    /**
+     * @brief set_robots_per_level Sets the amount of robots to be added with each level
+     */
+    void set_robots_per_level();
 };
 
 #endif // ROBOTS_H
