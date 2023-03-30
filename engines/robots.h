@@ -102,6 +102,60 @@ public:
      * @brief set_robots_per_level Sets the amount of robots to be added with each level
      */
     void set_robots_per_level();
+
+private:
+
+    /**
+     * @brief gamestate the state of the game
+     */
+    state gamestate;
+    /**
+     * @brief points the points of the player
+     */
+    int points;
+    /**
+     * @brief bonuspoints the bonus points gained in this level from wait kills
+     */
+    int bonuspoints;
+    /**
+     * @brief playerpos the player position
+     */
+    std::pair<int, int> playerpos;
+    /**
+     * @brief playerInput the player input for the next move
+     */
+    char playerInput;
+
+    /**
+     * @brief robotcount the number of current robots
+     */
+    int robotcount;
+    /**
+     * @brief robotsperlevel the number of robots to be added per additional level
+     */
+    int robotsperlevel;
+    /**
+     * @brief maxrobots the max number of robots for the current level
+     */
+    int maxrobots;
+    /**
+     * @brief currentlevel the current level
+     */
+    int currentlevel;
+    /**
+     * @brief robots set that contains the robots
+     */
+    std::set<std::pair<int, int>> robots;
+
+    /**
+     * @brief scrapcount the number of current scraps
+     */
+    int scrapcount;
+
+    /**
+     * @brief scrap set that contains the scraps
+     */
+    std::set<std::pair<int, int>> scrap;
 };
 
 #endif // ROBOTS_H
