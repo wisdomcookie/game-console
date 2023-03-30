@@ -8,6 +8,21 @@
 #include "engine.h"
 
 
+enum state{
+    START = 0, PLAY = 1, WAIT = 2, VICTORY = 3, LOSS = 4, EXIT = 5
+};
+
+constexpr const char *state_string(state s){
+    switch(s){
+    case START: return "START";
+    case PLAY: return "PLAY";
+    case WAIT: return "WAIT";
+    case VICTORY: return "VICTORY";
+    case LOSS: return "LOSS";
+    case EXIT: return "EXIT";
+    default: throw std::invalid_argument("State doesn't exit");
+    }
+}
 
 class Robots : public Engine
 {
